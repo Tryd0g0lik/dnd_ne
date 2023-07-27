@@ -33,9 +33,8 @@
   },
   "description": "My webpack project",
   "scripts": {
-    "build": "webpack --config ./webpack.config.js",
-    "build:dev": "build --mode=development",
-    "build:prod": "build --mode=production",
+    "build": "webpack --mode=production --config ./webpack.config.js",
+    "build:dev": "webpack --mode=development --config ./webpack.config.js",
     "serve": "webpack serve"
   }
 }
