@@ -4,7 +4,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
-const stylesHandler = MiniCssExtractPlugin.loader;
+// const stylesHandler = MiniCssExtractPlugin.loader;
 
 
 
@@ -16,10 +16,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
   },
-  // devServer: {
-  //   open: true,
-  //   host: 'localhost',
-  // },
+
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html',
@@ -56,13 +53,24 @@ module.exports = {
           loader: 'babel-loader',
         },],
       },
+
       {
-        test: /\.css$/i,
-        sideEffects: true,
+        test: /\.(s?)[ac]ss$/i,
+        // test: /\.(sass|scss|css)$/,
         include: [
-          path.resolve(__dirname, './src/styles'),
+          path.resolve(__dirname, './src')
         ],
-        use: [stylesHandler, 'css-loader', 'postcss-loader'],
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader'
+          }, {
+            loader: "sass-loader",
+
+          }, {
+            loader: 'postcss-loader'
+          }
+        ],
       },
       {
         test: /\.html$/i,
@@ -74,7 +82,8 @@ module.exports = {
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-        type: 'asset',
+        type: "asset",
+
       },
 
       // Add your rules for custom modules here

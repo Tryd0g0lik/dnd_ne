@@ -1,17 +1,21 @@
-* {
-  color: #1e3c4d;
-}
+$fonts: #1e3c4d;
+
 main {
   display: flex;
   flex-direction: column;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   background-color: #107abb;
 
 }
 
+
 article {
   background-color: #dee2e5;
+
+  h3 {
+    color: $fonts;
+  }
 }
 
 
