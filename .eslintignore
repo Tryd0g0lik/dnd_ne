@@ -2,3 +2,5 @@
 .*
 *.js
 webpack*
+node_modules
+*.config.js
