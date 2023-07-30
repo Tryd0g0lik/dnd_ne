@@ -4,7 +4,7 @@ function cellCreate(): HTMLDivElement {
   const divTask = document.createElement('div');
   divTask.classList.add('task');
   const htmlBlovkWClacssDeleteTask: HTMLDivElement = document.createElement('div');
-  htmlBlovkWClacssDeleteTask.classList.add('delete_task');
+  htmlBlovkWClacssDeleteTask.classList.add('delete-task');
   htmlBlovkWClacssDeleteTask.innerText = 'x';
   divTask.insertAdjacentElement('beforeend', htmlBlovkWClacssDeleteTask);
   const divDescrip = document.createElement('div');

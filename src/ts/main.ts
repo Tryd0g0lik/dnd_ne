@@ -29,7 +29,7 @@ export class Adding {
       /**
        * Вешаем функцию удаления на каждую из ячеек
        */
-      const cssBlockAfter = item.getElementsByClassName('delete_task')[0] as HTMLDivElement;
+      const cssBlockAfter = item.getElementsByClassName('delete-task')[0] as HTMLDivElement;
       cssBlockAfter.addEventListener('click', (e: MouseEvent) => {
         e.stopPropagation();
         item.remove();
@@ -40,6 +40,7 @@ export class Adding {
 
   startWork() {
     this.getToTasksRemover();
+
     this.getLink.addEventListener('click', (e: MouseEvent) => {
       /**
        * Добавляем ячейки
