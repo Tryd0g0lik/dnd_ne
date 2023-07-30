@@ -1,0 +1,68 @@
+const { cellAdding } = require('./functions.ts');
+
+
+export class Adding {
+  elem: HTMLDivElement
+
+  constructor(selector: HTMLDivElement) {
+    /**
+     * Выбираем колонку
+     */
+    this.elem = selector;
+    this.startWork();
+  }
+
+  get getLink(): HTMLDivElement {
+    /* подвал отбираем из dom-ма */
+    const elem = this.elem; //.cloneNode() as HTMLDivElement;
+    return elem.querySelector('footer .cell') as HTMLDivElement;
+  }
+
+  set setForAddingCell(elem: HTMLDivElement) {
+    /* вставляем ячейку */
+    cellAdding(elem);
+  }
+
+  getToTasksRemover() {
+    const arrElements = this.elem.getElementsByClassName('task') as HTMLCollectionOf<HTMLDivElement>;
+    Array.from(arrElements).forEach((item: HTMLDivElement) => {
+      /**
+       * Вешаем функцию удаления на каждую из ячеек
+       */
+      const cssBlockAfter = item.getElementsByClassName('delete_task')[0] as HTMLDivElement;
+      cssBlockAfter.addEventListener('click', (e: MouseEvent) => {
+        e.stopPropagation();
+        item.remove();
+      });
+    });
+
+  }
+
+  startWork() {
+    this.getToTasksRemover();
+    this.getLink.addEventListener('click', (e: MouseEvent) => {
+      /**
+       * Добавляем ячейки
+       */
+      e.preventDefault();
+      e.stopPropagation();
+
+      this.setForAddingCell = this.elem
+
+      /**
+       * Вешаем удаление
+       */
+      this.getToTasksRemover();
+    });
+
+
+
+  }
+}
+
+const article = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLDivElement>;
+let elem: HTMLDivElement;
+for (elem of article) {
+  new Adding(elem);
+}
+

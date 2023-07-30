@@ -1,0 +1,150 @@
+html {
+  display: table;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+  position: static;
+}
+
+main {
+  display: flex;
+  height: calc(100% - 95px);
+  background-color: #107abb;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  padding: 5px;
+  width: inherit;
+}
+
+/** Column start*/
+article {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  max-width: 272px;
+  background-color: #dee2e5;
+  border-radius: 5px;
+  width: 100%;
+  padding: 5px;
+  margin-right: 8px;
+  position: sticky;
+  padding-bottom: 50px;
+}
+
+.header {
+  height: 38px;
+  border: 0;
+  border-bottom: 1px solid #abb5bd;
+  margin-bottom: 5px;
+  bottom: 0;
+  cursor: pointer;
+}
+
+h3 {
+  padding-left: 12px;
+  color: #1e3c4d;
+
+}
+
+/* Cell start */
+footer {
+  position: absolute;
+  padding-left: 12px;
+  left: 0;
+  bottom: 0px;
+  background-color: #95a3ab;
+  height: 60px;
+  width: inherit;
+  box-sizing: border-box;
+}
+
+.cell {
+  padding-left: 12px;
+
+}
+
+.cell span {
+  display: inline-block;
+  padding: 3px;
+  border-radius: 5px
+}
+
+.footer__addCell {
+  text-decoration: underline;
+  cursor: pointer;
+
+}
+
+.footer__addCell:hover {
+  background-color: #107abb;
+  color: #dee2e5;
+}
+
+
+
+/* cell end */
+/* Column end */
+/* Content block for tasks  - start */
+.task {
+  background-color: #ffffff;
+  overflow: hidden;
+  padding: 8px 8px 4px 12px;
+  position: relative;
+  z-index: 10;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.delete_task {
+  content: '';
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  display: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 5px;
+  /* background: url("../img/x.png") no-repeat center; */
+  cursor: pointer;
+  font-size: 18px
+}
+
+.task:hover .delete_task {
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  z-index: 3;
+}
+
+.descrip {
+  word-wrap: break-word;
+  clear: both;
+  color: #172b4d;
+  display: block;
+  margin: 0 0 4px;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+/*Content block for tasks  - end*/
+
+.list-wrapper {
+  box-sizing: border-box;
+  display: inline-block;
+  height: 100%;
+  margin: 0 4px;
+  scroll-margin: 8px;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 272px;
+}
