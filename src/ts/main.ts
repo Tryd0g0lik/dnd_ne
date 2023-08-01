@@ -1,5 +1,5 @@
-const { cellAdding } = require('./functions.ts');
-const { ReLocates } = require('./relocates.ts');
+const { cellAdding, mouseEvents } = require('./functions.ts');
+// const { ReLocates } = require('./relocates.ts');
 
 
 export class Main {
@@ -69,6 +69,7 @@ for (elem of article) {
   new Main(elem);
 
 
-  new ReLocates(elem);
+
 }
+mouseEvents();
 
