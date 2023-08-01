@@ -32,7 +32,7 @@ export class Main {
        * Вешаем функцию удаления на каждую из ячеек
        */
       const cssBlockAfter = item.getElementsByClassName('delete-task')[0] as HTMLDivElement;
-      cssBlockAfter.addEventListener('click', (e: MouseEvent) => {
+      cssBlockAfter.addEventListener('mousedown', (e: MouseEvent) => {
         e.stopPropagation();
         item.remove();
       });
