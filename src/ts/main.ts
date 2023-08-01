@@ -63,13 +63,15 @@ export class Main {
   }
 }
 
-const article = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLDivElement>;
-let elem: HTMLDivElement;
-for (elem of article) {
-  new Main(elem);
+function work() {
+  const article = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLDivElement>;
+  let elem: HTMLDivElement;
 
-  new ReLocates(elem)
+  for (elem of article) {
+    new Main(elem)
+    new ReLocates(elem)
 
+  }
 }
 // mouseEvents();
-
+work();

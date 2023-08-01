@@ -39,16 +39,29 @@ function cellCreate(): HTMLDivElement {
 export function cellAdding(elem: HTMLElement) {
   /* добавляем ячейку в селектор */
   const htmlDivElement = cellCreate();
-  console.log('cellAdding - htmlDivElement 3 : ', htmlDivElement);
   elem.insertAdjacentElement('beforeend', htmlDivElement);
 }
 
 
 let actualColumn: HTMLElement;
 let actualCells: HTMLElement;
+let box: any;
 const onMouseOver = (e: MouseEvent) => {
-  actualCells.style.top = e.clientY - actualCells.clientHeight + 2 + 'px';
-  actualCells.style.left = e.clientX + -20 + 'px';
+
+  box = actualCells.getBoundingClientRect();
+  console.log('box: ', {
+    top_: box.top,
+    right: box.right,
+    bottom: box.bottom,
+    left: box.left,
+    clientX: e.clientX,
+  })
+  // actualCells.style.top = e.clientY + 'px';
+  actualCells.style.top = e.clientY - (e.clientY - box.top) + box.bottom + 'px';
+
+  // actualCells.style.left = + box.lef + e.clientX + 'px';
+  // actualCells.style.left = e.clientX - 10 + 'px';
+  actualCells.style.left = e.clientX - (e.clientX - box.lef) + 'px';
 
 }
 
@@ -77,48 +90,27 @@ const onMouseUp = (e: MouseEvent) => {
   // }
   // debugger;
   // if ('task' in eventTarget.classList.value)
+  actualCells.removeAttribute('style');
   actualCells = undefined as any;
 
   document.documentElement.removeEventListener('mouseup', onMouseUp);
   document.documentElement.removeEventListener('mouseover', onMouseOver);
 }
 
-// const onMouseDown = (e:MouseEvent) => {
-//   e.preventDefault();
-//   elem.classList.add('draggend');
-//   actualCells = elem;
-
-//   document.documentElement.addEventListener('mouseup', onMouseUp);
-//   document.documentElement.addEventListener('mouseover', onMouseOver)
-
-// }
 export function mouseEvents(elem: HTMLElement) {
 
-  // const getUserColumns = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLElement>;
-  // let getCellsOfColumn: HTMLCollectionOf<HTMLElement>;
-  // console.log('getUserColumns: ', getUserColumns)
-  // for (let i = 0; i < (getUserColumns).length; i++) {
-  //   console.log('getUserColumns[i]: ', getUserColumns[i])
-  //   getCellsOfColumn = getUserColumns[i].getElementsByClassName('task') as HTMLCollectionOf<HTMLElement>;
-
-    // Array.from(getCellsOfColumn).forEach((item) => {
-  // console.log('------', getCellsOfColumn)
-  // for (let i = 0; i < getCellsOfColumn.length; i++) {
-  const column_ = elem.parentElement as HTMLElement
   elem.addEventListener('mousedown', (e: MouseEvent) => {
     console.log('------ START');
     e.preventDefault();
     elem.classList.add('draggend');
     // debugger;
     actualCells = elem;
+
+
     console.log('actualCells: ', actualCells);
-    // actualColumn = actualCells.parentElement as HTMLElement;
     document.documentElement.addEventListener('mouseup', onMouseUp);
     document.documentElement.addEventListener('mouseover', onMouseOver);
 
   });
-    // }
-    // })
-  // }
 
 }
