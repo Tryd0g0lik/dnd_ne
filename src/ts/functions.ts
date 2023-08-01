@@ -44,16 +44,39 @@ export function cellAdding(elem: HTMLElement) {
 }
 
 
-// let elem: HTMLElement;
+let actualColumn: HTMLElement;
 let actualCells: HTMLElement;
 const onMouseOver = (e: MouseEvent) => {
-  actualCells.style.top = e.clientY + 'px';
-  actualCells.style.left = e.clientY + 'px';
+  actualCells.style.top = e.clientY - actualCells.clientHeight + 2 + 'px';
+  actualCells.style.left = e.clientX + -20 + 'px';
 
 }
 
-const onMouseUp = () => {
+const onMouseUp = (e: MouseEvent) => {
+  // const getParentOfColums = actualCells.parentElement;
+  const eventTarget = e.target as HTMLElement;
+  const eventCurentTarget = e.currentTarget as HTMLElement;
+
+  console.log('d 0: ', e.target, eventTarget.classList.contains('task'))
+  // console.log('d 1: ', 'task' in eventTarget.classList, eventCurentTarget.classList, eventCurentTarget)
+  // console.log('d 2: ', eventTarget.classList[0])
+
+  if ((e.target && eventTarget.classList.contains('task')) && (e.currentTarget
+    || (e.currentTarget !== null && (e.currentTarget as HTMLElement).classList.contains('task')))) {
+    console.log('END')
+    actualColumn = eventTarget.parentElement as HTMLElement;
+    console.log('d 2: ', eventTarget, eventCurentTarget)
+    actualColumn.insertBefore(actualCells, eventTarget);
+  }
   actualCells.classList.remove('draggend');
+
+
+// }
+  // if ('task' in eventTarget.classList[0] ) {
+
+  // }
+  // debugger;
+  // if ('task' in eventTarget.classList.value)
   actualCells = undefined as any;
 
   document.documentElement.removeEventListener('mouseup', onMouseUp);
@@ -69,26 +92,33 @@ const onMouseUp = () => {
 //   document.documentElement.addEventListener('mouseover', onMouseOver)
 
 // }
-export function mouseEvents() {
-  const getUserColumns = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLElement>;
-  let getCellsOfColumn: HTMLCollectionOf<HTMLElement>;
+export function mouseEvents(elem: HTMLElement) {
 
-  for (let i = 0; i < (getUserColumns).length; i++) {
-    getCellsOfColumn = getUserColumns[i].getElementsByClassName('.task') as HTMLCollectionOf<HTMLElement>;
+  // const getUserColumns = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLElement>;
+  // let getCellsOfColumn: HTMLCollectionOf<HTMLElement>;
+  // console.log('getUserColumns: ', getUserColumns)
+  // for (let i = 0; i < (getUserColumns).length; i++) {
+  //   console.log('getUserColumns[i]: ', getUserColumns[i])
+  //   getCellsOfColumn = getUserColumns[i].getElementsByClassName('task') as HTMLCollectionOf<HTMLElement>;
 
     // Array.from(getCellsOfColumn).forEach((item) => {
-    for (let item of getCellsOfColumn) {
-      item.addEventListener('mousedown', (e: MouseEvent) => {
-        e.preventDefault();
-        item.classList.add('draggend');
-        actualCells = item;
+  // console.log('------', getCellsOfColumn)
+  // for (let i = 0; i < getCellsOfColumn.length; i++) {
+  const column_ = elem.parentElement as HTMLElement
+  elem.addEventListener('mousedown', (e: MouseEvent) => {
+    console.log('------ START');
+    e.preventDefault();
+    elem.classList.add('draggend');
+    // debugger;
+    actualCells = elem;
+    console.log('actualCells: ', actualCells);
+    // actualColumn = actualCells.parentElement as HTMLElement;
+    document.documentElement.addEventListener('mouseup', onMouseUp);
+    document.documentElement.addEventListener('mouseover', onMouseOver);
 
-        document.documentElement.addEventListener('mouseup', onMouseUp);
-        document.documentElement.addEventListener('mouseover', onMouseOver)
-
-      });
-    }
+  });
+    // }
     // })
-  }
+  // }
 
 }

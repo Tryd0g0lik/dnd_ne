@@ -20,10 +20,11 @@ export class ReLocates {
   setDnd() { // elements: HTMLCollectionOf<HTMLDivElement>
     // let actualElement: HTMLElement;
 
-    mouseEvents();
-    // Array.from(elements).forEach((elem: HTMLDivElement) => {
+    Array.from(this.getCells).forEach((elem: HTMLDivElement) => {
+      mouseEvents(elem);
 
-    // });
+
+    });
   }
 
   startWork() {
