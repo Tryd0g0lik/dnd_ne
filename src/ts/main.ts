@@ -68,7 +68,7 @@ export class Main {
 const article = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLDivElement>;
 let elem: HTMLDivElement;
 for (elem of article) {
-  // new Main(elem);
+  new Main(elem);
 }
 
 // mouseEvents();
