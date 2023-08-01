@@ -1,6 +1,6 @@
-const { cellAdding } = require('./functions.ts');
-const { ReLocates } = require('./relocates.ts');
-
+const { cellAdding, mouseEvents } = require('./functions.ts');
+// const { ReLocates } = require('./relocates.ts');
+// const { mouseEvents } = require('./functions.ts');
 
 export class Main {
 
@@ -63,12 +63,12 @@ export class Main {
   }
 }
 
+// const columns_ = document.getElementsByTagName('article');
+
 const article = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLDivElement>;
 let elem: HTMLDivElement;
 for (elem of article) {
-  new Main(elem);
-
-
-  new ReLocates(elem);
+  // new Main(elem);
 }
 
+// mouseEvents();
