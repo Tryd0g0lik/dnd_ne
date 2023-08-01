@@ -21,6 +21,7 @@ describe("Test interfice It's adding cell", () => {
 
     const collumn01 = await page.$('#column-01 footer .cell');
     await collumn01.click();
+
   });
   afterEach(async () => {
     await browser.close();

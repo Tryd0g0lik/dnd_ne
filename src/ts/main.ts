@@ -1,7 +1,9 @@
 const { cellAdding } = require('./functions.ts');
+const { ReLocates } = require('./relocates.ts');
 
 
-export class Adding {
+export class Main {
+
   elem: HTMLDivElement
 
   constructor(selector: HTMLDivElement) {
@@ -64,6 +66,9 @@ export class Adding {
 const article = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLDivElement>;
 let elem: HTMLDivElement;
 for (elem of article) {
-  new Adding(elem);
+  new Main(elem);
+
+
+  new ReLocates(elem);
 }
 

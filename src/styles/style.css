@@ -2,6 +2,7 @@ html {
   display: table;
   height: 100%;
   width: 100%;
+  position: relative;
 }
 
 body {
@@ -11,11 +12,12 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.2;
-  position: static;
+  
 }
 
 main {
   display: flex;
+  
   height: calc(100% - 95px);
   background-color: #107abb;
   font-size: 14px;
@@ -36,7 +38,7 @@ article {
   width: 100%;
   padding: 5px;
   margin-right: 8px;
-  position: sticky;
+  
   padding-bottom: 50px;
 }
 
@@ -78,33 +80,42 @@ footer {
   border-radius: 5px
 }
 
-.footer__addCell {
+.footer-addCell {
   text-decoration: underline;
   cursor: pointer;
 
 }
 
-.footer__addCell:hover {
+.footer-addCell:hover {
   background-color: #107abb;
   color: #dee2e5;
 }
-
-
-
-/* cell end */
-/* Column end */
-/* Content block for tasks  - start */
+/*cell drag-and-drob - start*/
 .task {
   background-color: #ffffff;
   overflow: hidden;
   padding: 8px 8px 4px 12px;
-  position: relative;
+  /* position: relative; */
   z-index: 10;
   margin-bottom: 10px;
   border-radius: 5px;
-  position: relative;
+  /* position: relative; */
+    cursor: auto;
 }
 
+.task.draggend {
+  border-radius: 10px;
+  position: absolute;
+  background: #fff;
+  cursor: grabbing;
+  z-index: 999;
+  pointer-events: none;
+}
+
+/*cell drag-and-drob - end*/
+/* cell end */
+/* Column end */
+/* Content block for tasks  - start */
 .delete-task {
   content: '';
   position: absolute;
