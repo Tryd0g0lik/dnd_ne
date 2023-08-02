@@ -47,54 +47,42 @@ let actualColumn: HTMLElement;
 let actualCells: HTMLElement;
 let box: any;
 const onMouseOver = (e: MouseEvent) => {
-
-  box = actualCells.getBoundingClientRect();
+  box = (e.target as HTMLElement).getBoundingClientRect();
   console.log('box: ', {
-    top_: box.top,
+    ev: e,
     right: box.right,
     bottom: box.bottom,
     left: box.left,
+    clientY: e.clientY,
     clientX: e.clientX,
   })
-  // actualCells.style.top = e.clientY + 'px';
-  actualCells.style.top = e.clientY - (e.clientY - box.top) + box.bottom + 'px';
 
-  // actualCells.style.left = + box.lef + e.clientX + 'px';
-  // actualCells.style.left = e.clientX - 10 + 'px';
-  actualCells.style.left = e.clientX - (e.clientX - box.lef) + 'px';
+  actualCells.style.top = box.top + e.clientY - box.top - 28 + 'px'; // 28 это кнопка "удалить ячейку"
 
+  actualCells.style.left = box.lef + e.clientX - box.left + 'px';
+  console.log(actualCells)
 }
 
 const onMouseUp = (e: MouseEvent) => {
-  // const getParentOfColums = actualCells.parentElement;
   const eventTarget = e.target as HTMLElement;
   const eventCurentTarget = e.currentTarget as HTMLElement;
 
   console.log('d 0: ', e.target, eventTarget.classList.contains('task'))
-  // console.log('d 1: ', 'task' in eventTarget.classList, eventCurentTarget.classList, eventCurentTarget)
-  // console.log('d 2: ', eventTarget.classList[0])
 
   if ((e.target && eventTarget.classList.contains('task')) && (e.currentTarget
     || (e.currentTarget !== null && (e.currentTarget as HTMLElement).classList.contains('task')))) {
-    console.log('END')
+    console.log('END', box)
     actualColumn = eventTarget.parentElement as HTMLElement;
     console.log('d 2: ', eventTarget, eventCurentTarget)
     actualColumn.insertBefore(actualCells, eventTarget);
   }
   actualCells.classList.remove('draggend');
-
-
-// }
-  // if ('task' in eventTarget.classList[0] ) {
-
-  // }
-  // debugger;
-  // if ('task' in eventTarget.classList.value)
   actualCells.removeAttribute('style');
   actualCells = undefined as any;
 
   document.documentElement.removeEventListener('mouseup', onMouseUp);
   document.documentElement.removeEventListener('mouseover', onMouseOver);
+  box = undefined;
 }
 
 export function mouseEvents(elem: HTMLElement) {
@@ -105,7 +93,6 @@ export function mouseEvents(elem: HTMLElement) {
     elem.classList.add('draggend');
     // debugger;
     actualCells = elem;
-
 
     console.log('actualCells: ', actualCells);
     document.documentElement.addEventListener('mouseup', onMouseUp);

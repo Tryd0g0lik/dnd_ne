@@ -10,7 +10,9 @@ export class Main {
     /**
      * Выбираем колонку
      */
-    this.elem = selector;
+    this.elem = selector; 
+    // Перенести  в "get getLink():", а "get getLink():" сделать отдельной функцией.
+    //   тем самым новуй объект вынести и сделать рестарт при добовлении
     this.startWork();
   }
 
