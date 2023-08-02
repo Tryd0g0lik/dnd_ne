@@ -46,6 +46,9 @@ export function cellAdding(elem: HTMLElement) {
 let actualColumn: HTMLElement;
 let actualCells: HTMLElement;
 let box: any;
+let boxLeft: number;
+
+
 const onMouseOver = (e: MouseEvent) => {
   box = (e.target as HTMLElement).getBoundingClientRect();
   console.log('box: ', {
@@ -57,9 +60,9 @@ const onMouseOver = (e: MouseEvent) => {
     clientX: e.clientX,
   })
 
-  actualCells.style.top = box.top + e.clientY - box.top - 28 + 'px'; // 28 это кнопка "удалить ячейку"
-
-  actualCells.style.left = box.lef + e.clientX - box.left + 'px';
+  actualCells.style.top = box.top + (e.clientY - box.top - 28) + 'px'; // 28 это кнопка "удалить ячейку"
+  console.log('boxLeft: ', boxLeft)
+  actualCells.style.left = e.clientX - (e.clientX - boxLeft) + 'px';
   console.log(actualCells)
 }
 
@@ -90,6 +93,8 @@ export function mouseEvents(elem: HTMLElement) {
   elem.addEventListener('mousedown', (e: MouseEvent) => {
     console.log('------ START');
     e.preventDefault();
+
+    boxLeft = (elem.getBoundingClientRect()).left; // Left координнаты HTMLElement до приобретения класса 'draggend'
     elem.classList.add('draggend');
     // debugger;
     actualCells = elem;
