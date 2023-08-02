@@ -2,32 +2,55 @@ const { mouseEvents } = require('./functions.ts');
 
 
 export class ReLocates {
-  columns: HTMLDivElement
+  /**
+   * It's class for a Dnd actions
+   */
 
-  constructor(selector: HTMLDivElement) {
+  columns: HTMLDivElement | undefined;
+  constructor() {
     /**
-     * Выбираем колонку
+     * To chooses a column for a event
      */
-    this.columns = selector;
+    this.columns = undefined;
     this.startWork();
   }
 
-  get getCells(): HTMLCollectionOf<HTMLDivElement> {
-    const divElements = this.columns.getElementsByClassName('task') as HTMLCollectionOf<HTMLDivElement>;
-    return divElements
+  set getCells(elems: HTMLCollectionOf<HTMLDivElement>) {
+    // вешаем прослушку на кнопку ДОБАВИТЬ
+
+    Array.from(elems).forEach((elem: HTMLDivElement) => {
+      elem.addEventListener('click', (e: MouseEvent) => {
+        // this.getDnd();
+        this.startWork();
+
+        document.documentElement.removeEventListener('click', this.getCells as any);
+      });
+    });
   }
 
-  setDnd() { // elements: HTMLCollectionOf<HTMLDivElement>
-    // let actualElement: HTMLElement;
+  getDnd() { // setDnd rename in the getDnd and choose a type from the GET to the METHOD/
+    const collums = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLDivElement>;
+    Array.from(collums).forEach(async (collum: HTMLElement) => {
+      const cells = await collum.getElementsByClassName('task');
 
-    Array.from(this.getCells).forEach((elem: HTMLDivElement) => {
-      mouseEvents(elem);
+      await Array.from(cells).forEach((cell: Element) => {
+        (cell as HTMLDivElement).addEventListener('mousedown', (e: MouseEvent) => {
+          e.preventDefault();
+          console.log('cell: ', cell);
+          mouseEvents(cell, e);
+          cell.removeEventListener('mousedown', this.getDnd);
+
+        });
+
+      });
 
 
     });
   }
 
   startWork() {
-    this.setDnd()
+
+    this.getCells = document.getElementsByClassName('cell') as HTMLCollectionOf<HTMLDivElement>;
+    this.getDnd();
   }
 }

@@ -1,6 +1,8 @@
 
 function cellCreate(): HTMLDivElement {
-  /* создаём ячейку */
+  /**
+   * Created a new html code to the cell
+   */
   const divTask = document.createElement('div');
   divTask.classList.add('task');
   const htmlBlovkWClacssDeleteTask: HTMLDivElement = document.createElement('div');
@@ -37,7 +39,10 @@ function cellCreate(): HTMLDivElement {
 
 
 export function cellAdding(elem: HTMLElement) {
-  /* добавляем ячейку в селектор */
+  /**
+   * Cell is add
+   * 
+   */
   const htmlDivElement = cellCreate();
   elem.insertAdjacentElement('beforeend', htmlDivElement);
 }
@@ -45,7 +50,7 @@ export function cellAdding(elem: HTMLElement) {
 
 let actualColumn: HTMLElement;
 let actualCells: HTMLElement;
-let box: any;
+
 let boxLeft: number;
 let boxTop: number;
 let clientX: number;
@@ -53,62 +58,57 @@ let clientY: number;
 
 
 const onMouseOver = (e: MouseEvent) => {
-  box = (e.target as HTMLElement).getBoundingClientRect();
-  console.log('box: ', {
-    ev: e,
-    right: box.right,
-    bottom: box.bottom,
-    left: box.left,
-    clientY: e.clientY,
-    clientX: e.clientX,
-  })
-
-  actualCells.style.top = e.clientY - (clientY - boxTop - 28) + 'px'; // 28 это кнопка "удалить ячейку"
-
+  /**
+   *there is the active box locationing dinding inder course(mouse)
+   */
+  actualCells.style.top = e.clientY - (clientY - boxTop) + 'px'; // 28 это кнопка "удалить ячейку"
   actualCells.style.left = e.clientX - (clientX - boxLeft) + 'px';
-  console.log(actualCells)
+
 }
 
 const onMouseUp = (e: MouseEvent) => {
   const eventTarget = e.target as HTMLElement;
-  const eventCurentTarget = e.currentTarget as HTMLElement;
-
-  console.log('d 0: ', e.target, eventTarget.classList.contains('task'))
-
   if ((e.target && eventTarget.classList.contains('task')) && (e.currentTarget
     || (e.currentTarget !== null && (e.currentTarget as HTMLElement).classList.contains('task')))) {
-    console.log('END', box)
+    /**
+     * THe DnD action to the new position/
+     */
     actualColumn = eventTarget.parentElement as HTMLElement;
-    console.log('d 2: ', eventTarget, eventCurentTarget)
     actualColumn.insertBefore(actualCells, eventTarget);
   }
+
   actualCells.classList.remove('draggend');
   actualCells.removeAttribute('style');
   actualCells = undefined as any;
 
   document.documentElement.removeEventListener('mouseup', onMouseUp);
   document.documentElement.removeEventListener('mouseover', onMouseOver);
-  box = undefined;
+
+  (boxLeft as any) = undefined;
+  (boxTop as any) = undefined;
+  (clientX as any) = undefined;
+  (clientY as any) = undefined;
+  // The finished to the DnD actions
 }
 
-export function mouseEvents(elem: HTMLElement) {
 
-  elem.addEventListener('mousedown', (e: MouseEvent) => {
-    console.log('------ START');
-    e.preventDefault();
+export function mouseEvents(elem: HTMLElement, e: MouseEvent) {
+  /**
+ * Start DnD action
+ */
 
-    boxLeft = (elem.getBoundingClientRect()).left; // Left координнаты HTMLElement до приобретения класса 'draggend'
-    boxTop = (elem.getBoundingClientRect()).top;
-    clientX = e.clientX;
-    clientY = e.clientY
-    elem.classList.add('draggend');
-    // debugger;
-    actualCells = elem;
+  /**
+   * geting the box's location wich has a proporty ':hover'
+   */
+  boxLeft = (elem.getBoundingClientRect()).left; // It's Left point of the coordinate to the HTMLElement, before 'draggend' class get
+  boxTop = (elem.getBoundingClientRect()).top;
+  clientX = e.clientX;
+  clientY = e.clientY
 
-    console.log('actualCells: ', actualCells);
-    document.documentElement.addEventListener('mouseup', onMouseUp);
-    document.documentElement.addEventListener('mouseover', onMouseOver);
+  elem.classList.add('draggend');
+  actualCells = elem;
 
-  });
 
+  document.documentElement.addEventListener('mouseup', onMouseUp);
+  document.documentElement.addEventListener('mouseover', onMouseOver);
 }

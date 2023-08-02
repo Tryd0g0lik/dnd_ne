@@ -70,10 +70,11 @@ function work() {
   let elem: HTMLDivElement;
 
   for (elem of article) {
-    new Main(elem)
-    new ReLocates(elem)
+    new Main(elem);
+
 
   }
+  new ReLocates();
 }
 // mouseEvents();
 work();
