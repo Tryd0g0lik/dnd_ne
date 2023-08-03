@@ -1,4 +1,4 @@
-const { mouseEvents } = require('./functions.ts');
+const { hadlerMmouseEvent } = require('./functions.ts');
 
 
 export class ReLocates {
@@ -20,9 +20,7 @@ export class ReLocates {
 
     Array.from(elems).forEach((elem: HTMLDivElement) => {
       elem.addEventListener('click', (e: MouseEvent) => {
-        // this.getDnd();
         this.startWork();
-
         document.documentElement.removeEventListener('click', this.getCells as any);
       });
     });
@@ -30,25 +28,8 @@ export class ReLocates {
 
   getDnd() { // setDnd rename in the getDnd and choose a type from the GET to the METHOD/
     const collums = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLDivElement>;
-    Array.from(collums).forEach(async (collum: HTMLElement) => { // Get column from the page
-      const cells = await collum.getElementsByClassName('task'); 
-
-      Array.from(cells).forEach((cell: Element) => { // Beginning works on the event-listener        
-        (cell as HTMLDivElement).addEventListener('mousedown', hadlerMmouseEvent);
-
-        function hadlerMmouseEvent(e: MouseEvent) {
-          /**
-     * This's headler for a 'mousedown' MouseEvent
-     */
-          e.preventDefault();
-          mouseEvents(cell, e);
-          document.documentElement.removeEventListener('mousedown', hadlerMmouseEvent);
-
-        } 
-
-      });
-
-
+    Array.from(collums).forEach(async (collum: HTMLElement) => { // Get column from the page    
+      document.body.addEventListener('mousedown', hadlerMmouseEvent, true);
     });
   }
 
