@@ -152,7 +152,7 @@ const heightForNewLocation = async (elem: HTMLElement) => {
       document.documentElement.removeEventListener('mouseenter', heandlerMouseenter as any);
       e.stopPropagation();
 
-      console.log('dsdsssssssssssssssssss');
+
     }
   });
 
