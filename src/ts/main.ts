@@ -10,7 +10,9 @@ export class Main {
     /**
      * Выбираем колонку
      */
-    this.elem = selector;
+    this.elem = selector; 
+    // Перенести  в "get getLink():", а "get getLink():" сделать отдельной функцией.
+    //   тем самым новуй объект вынести и сделать рестарт при добовлении
     this.startWork();
   }
 
@@ -32,7 +34,7 @@ export class Main {
        * Вешаем функцию удаления на каждую из ячеек
        */
       const cssBlockAfter = item.getElementsByClassName('delete-task')[0] as HTMLDivElement;
-      cssBlockAfter.addEventListener('click', (e: MouseEvent) => {
+      cssBlockAfter.addEventListener('mousedown', (e: MouseEvent) => {
         e.stopPropagation();
         item.remove();
       });
@@ -63,12 +65,16 @@ export class Main {
   }
 }
 
-const article = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLDivElement>;
-let elem: HTMLDivElement;
-for (elem of article) {
-  new Main(elem);
+function work() {
+  const article = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLDivElement>;
+  let elem: HTMLDivElement;
+
+  for (elem of article) {
+    new Main(elem);
 
 
-  new ReLocates(elem);
+  }
+  new ReLocates();
 }
-
+// mouseEvents();
+work();

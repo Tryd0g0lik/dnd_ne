@@ -1,32 +1,42 @@
-const { mouseEvents } = require('./functions.ts');
+const { hadlerMmouseEvent } = require('./functions.ts');
 
 
 export class ReLocates {
-  columns: HTMLDivElement
+  /**
+   * It's class for a Dnd actions
+   */
 
-  constructor(selector: HTMLDivElement) {
+  columns: HTMLDivElement | undefined;
+  constructor() {
     /**
-     * Выбираем колонку
+     * To chooses a column for a event
      */
-    this.columns = selector;
+    this.columns = undefined;
     this.startWork();
   }
 
-  get getCells(): HTMLCollectionOf<HTMLDivElement> {
-    const divElements = this.columns.getElementsByClassName('task') as HTMLCollectionOf<HTMLDivElement>;
-    return divElements
+  set getCells(elems: HTMLCollectionOf<HTMLDivElement>) {
+    // вешаем прослушку на кнопку ДОБАВИТЬ
+
+    Array.from(elems).forEach((elem: HTMLDivElement) => {
+      elem.addEventListener('click', (e: MouseEvent) => {
+        this.startWork();
+        document.documentElement.removeEventListener('click', this.getCells as any);
+      });
+    });
   }
 
-  setDnd() { // elements: HTMLCollectionOf<HTMLDivElement>
-    // let actualElement: HTMLElement;
-
-    mouseEvents(this.columns, this.getCells);
-    // Array.from(elements).forEach((elem: HTMLDivElement) => {
-
-    // });
+  getDnd() { // setDnd rename in the getDnd and choose a type from the GET to the METHOD/
+    const collums = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLDivElement>;
+    Array.from(collums).forEach(async (collum: HTMLElement) => { // Get column from the page    
+      document.body.addEventListener('mousedown', hadlerMmouseEvent, true);
+    });
   }
 
   startWork() {
-    this.setDnd()
+    const cells = document.getElementsByClassName('cell') as HTMLCollectionOf<HTMLDivElement>;
+    this.getCells = cells;
+    this.getDnd();
+
   }
 }

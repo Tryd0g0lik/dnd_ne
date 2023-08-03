@@ -1,6 +1,8 @@
 
 function cellCreate(): HTMLDivElement {
-  /* создаём ячейку */
+  /**
+   * Created a new html code to the cell
+   */
   const divTask = document.createElement('div');
   divTask.classList.add('task');
   const htmlBlovkWClacssDeleteTask: HTMLDivElement = document.createElement('div');
@@ -37,92 +39,123 @@ function cellCreate(): HTMLDivElement {
 
 
 export function cellAdding(elem: HTMLElement) {
-  /* добавляем ячейку в селектор */
+  /**
+   * Cell is add
+   * 
+   */
   const htmlDivElement = cellCreate();
-  console.log('htmlDivElement 3 : ', htmlDivElement);
   elem.insertAdjacentElement('beforeend', htmlDivElement);
 }
 
-let items: HTMLElement;
-let actualElement: HTMLElement;
-let user = {
-  onMouseEventOver(e: MouseEvent) {
-    // actualElement = document.querySelector('.task.draggend') as HTMLElement;
-    console.log('onMouseEventOver :', e.clientY, e.clientX, actualElement);
-    // console.log('(event.pageX, event.pageY: ', e.clientX)
 
-    actualElement.style.top = e.clientY - 10 + 'px';
-    actualElement.style.left = e.clientX - 10 + 'px';
+let actualColumn: HTMLElement;
+let actualCells: HTMLElement;
 
+let boxLeft: number;
+let boxTop: number;
+let clientX: number;
+let clientY: number;
 
-  },
-
-  onMouseDown(e: MouseEvent, htmlElem: HTMLElement) {
-    /**
-     * params htmlElem: it's element with type HTMLElement has a MouesEvent
-     */
-    e.preventDefault();
-    console.log('e.currentTarget:: ', e.currentTarget)
-    console.log('htmlElem 1:: ', htmlElem)
-    if (htmlElem === e.target || htmlElem === e.currentTarget) {
-      console.log('htmlElem 2:: ', htmlElem)
-      e.stopPropagation();
-      actualElement = htmlElem as HTMLElement;
-      actualElement.classList.add('draggend');
-
-    };
-  },
-
-  onMouseUp(e: MouseEvent) {
-    // actualElement.style.top = e.offsetY + 'px';
-    // actualElement.style.left = e.pageX + 'px';
-
-
-    const mouseUpItem = e.target as HTMLElement;
-    items = mouseUpItem.parentElement as HTMLElement
-    // items = document.querySelector('#column-01') as HTMLElement;
-    console.log(e)
-    // actualElement.style.top = '';
-    // actualElement.style.left = '';
-    console.log('onMouseUp :', e.clientY, e.clientX, actualElement);
-    console.log("items: ", items);
-    console.log("actualElement: ", actualElement);
-    console.log("mouseUpItem: ", mouseUpItem);
-    // debugger;
-
-    items.insertBefore(actualElement, mouseUpItem);
-    actualElement.classList.remove('draggend');
-
-    document.documentElement.removeEventListener('mouseup', user.onMouseUp);
-    document.documentElement.removeEventListener('mouseover', user.onMouseEventOver);
-    actualElement = undefined as any;
-
-  },
-}
-
-export function mouseEvents(columns: HTMLElement, blocks: HTMLCollectionOf<HTMLElement>) {
+const onMouseOver = (e: MouseEvent) => {
   /**
-   * param columns: it's a html-block which has sections for movements
-   * param blocks: This's sections which will been movement by the once
+   *there is the active box locationing dinding inder course(mouse)
    */
-  user.onMouseDown = user.onMouseDown.bind(user.onMouseDown);// as Function;
-  user.onMouseEventOver = user.onMouseEventOver.bind(user.onMouseEventOver); //as Function;
-  user.onMouseUp = user.onMouseUp.bind(user.onMouseUp); // as Function;
-  console.log('blocks 0: ', blocks);
-  for (let i = 0; i < (blocks).length; i++) {
-    blocks[i].addEventListener('mousedown', (e: MouseEvent) => {
-      user.onMouseDown(e, blocks[i]);
-
-      document.documentElement.addEventListener('mouseup', user.onMouseUp);
-      document.documentElement.addEventListener('mouseover', user.onMouseEventOver);
-
-      // document.documentElement.removeEventListener('mouseover', () => user.onMouseEventOver);
-      // document.documentElement.removeEventListener('mousedown', () => user.onMouseDown);
-
-    });
-  };
+  actualCells.style.top = e.clientY - (clientY - boxTop) + 'px'; // 28 это кнопка "удалить ячейку"
+  actualCells.style.left = e.clientX - (clientX - boxLeft) + 'px';
+  (e.target as HTMLElement).removeEventListener('mouseenter', heightForNewLocation);
+  document.body.addEventListener('mouseleave', handleRemoveAttributePaddingTop, true)
+}
 
 
+const onMouseUp = (e: MouseEvent) => {
+  const eventTarget = e.target as HTMLElement;
+  if ((e.target && eventTarget.classList.contains('task')) && (e.currentTarget
+    || (e.currentTarget !== null && (e.currentTarget as HTMLElement).classList.contains('task')))) {
+    /**
+     * THe DnD action to the new position/
+     */
+    actualColumn = eventTarget.parentElement as HTMLElement;
+    actualColumn.insertBefore(actualCells, eventTarget);
+  }  
 
+  actualCells.classList.remove('draggend');
+  actualCells.removeAttribute('style');
+
+  document.documentElement.removeEventListener('mouseup', onMouseUp);
+  document.documentElement.removeEventListener('mouseover', onMouseOver);
+
+  (boxLeft as any) = undefined;
+  (boxTop as any) = undefined;
+  (clientX as any) = undefined;
+  (clientY as any) = undefined;
+  actualCells = undefined as any;
+  // The finished to the DnD actions
+}
+
+
+async function heightForNewLocation(e: MouseEvent) {
+  /**
+   * This's Handle for a event
+   */
+  const response = (e.target as HTMLElement);
+
+  if (actualCells !== undefined
+    && response.classList.contains('task')
+    && response.classList.contains('draggend') === false) {
+    let box = response.getBoundingClientRect();
+
+    if (e.clientY >= box.top && e.clientY <= box.bottom
+      && e.clientX >= box.left && e.clientX <= box.right) {
+      const r = e.target as HTMLElement;
+      r.style.paddingTop = String(actualCells.offsetHeight) + 'px';
+    };
+  }
 
 }
+
+
+async function handleRemoveAttributePaddingTop() {
+  /**
+   * This's Handle for a event
+   */
+  Array.from(document.getElementsByClassName('task')).forEach((elem) => {
+    if (elem.hasAttribute('style')) elem.removeAttribute('style');
+    elem.removeEventListener('mouseleave', handleRemoveAttributePaddingTop);
+  });
+}
+
+
+function mouseEvents(elem: HTMLElement, e: MouseEvent) {
+  /**
+ * Start DnD action
+ */
+
+  /**
+   * geting the box's location wich has a proporty ':hover'
+   */
+  boxLeft = (elem.getBoundingClientRect()).left; // It's Left point of the coordinate to the HTMLElement, before 'draggend' class get
+  boxTop = (elem.getBoundingClientRect()).top;
+  clientX = e.clientX;
+  clientY = e.clientY
+
+  elem.classList.add('draggend');
+  actualCells = elem;
+
+  document.body.addEventListener('mouseenter', heightForNewLocation, true);
+  document.documentElement.addEventListener('mouseup', onMouseUp);
+  document.documentElement.addEventListener('mouseover', onMouseOver);
+}
+
+
+export function hadlerMmouseEvent(e: MouseEvent) {
+  /**
+* This's headler for a 'mousedown' MouseEvent
+*/
+
+  if ((e.target as HTMLElement).classList.contains('task')) {
+    const cell = e.target as HTMLElement;
+    e.preventDefault();
+    mouseEvents(cell, e);
+  }
+  document.documentElement.removeEventListener('mousedown', hadlerMmouseEvent);
+} 

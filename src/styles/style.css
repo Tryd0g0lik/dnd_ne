@@ -12,12 +12,12 @@ body {
   margin: 0;
   padding: 0;
   line-height: 1.2;
-  
+
 }
 
 main {
   display: flex;
-  
+
   height: calc(100% - 95px);
   background-color: #107abb;
   font-size: 14px;
@@ -38,7 +38,7 @@ article {
   width: 100%;
   padding: 5px;
   margin-right: 8px;
-  
+/* position: relative; */
   padding-bottom: 50px;
 }
 
@@ -59,12 +59,12 @@ h3 {
 
 /* Cell start */
 footer {
-  position: absolute;
+  /* position: absolute; */
   padding-left: 12px;
   left: 0;
   bottom: 0px;
   background-color: #95a3ab;
-  height: 60px;
+  /* height: 60px; */
   width: inherit;
   box-sizing: border-box;
 }
@@ -90,17 +90,19 @@ footer {
   background-color: #107abb;
   color: #dee2e5;
 }
+
 /*cell drag-and-drob - start*/
 .task {
+  box-sizing: border-box;
   background-color: #ffffff;
+  width: 100%;
+    max-width: 271px;
   overflow: hidden;
-  padding: 8px 8px 4px 12px;
-  /* position: relative; */
+  padding: 8px 8px 14px 12px;
   z-index: 10;
-  margin-bottom: 10px;
   border-radius: 5px;
-  /* position: relative; */
-    cursor: auto;
+  cursor: auto;
+  border-bottom: 1px solid rgb(23, 43, 77);
 }
 
 .task.draggend {
@@ -118,22 +120,25 @@ footer {
 /* Content block for tasks  - start */
 .delete-task {
   content: '';
-  position: absolute;
+  position: relative;
   top: 5px;
-  right: 5px;
+  /* right: calc(-90% - 10px); */
   display: none;
-  width: 15px;
-  height: 15px;
+  width: 25px;
+    height: 25px;
   border-radius: 5px;
   /* background: url("../img/x.png") no-repeat center; */
   cursor: pointer;
-  font-size: 18px
+  font-size: 18px;
+    background-color: red;
+    color: #fff;
+    padding-bottom: 3px;
 }
 
 .task:hover .delete-task {
   display: flex;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
   z-index: 3;
 }
 
