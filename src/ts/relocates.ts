@@ -30,17 +30,21 @@ export class ReLocates {
 
   getDnd() { // setDnd rename in the getDnd and choose a type from the GET to the METHOD/
     const collums = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLDivElement>;
-    Array.from(collums).forEach(async (collum: HTMLElement) => {
-      const cells = await collum.getElementsByClassName('task');
+    Array.from(collums).forEach(async (collum: HTMLElement) => { // Get column from the page
+      const cells = await collum.getElementsByClassName('task'); 
 
-      await Array.from(cells).forEach((cell: Element) => {
-        (cell as HTMLDivElement).addEventListener('mousedown', (e: MouseEvent) => {
+      Array.from(cells).forEach((cell: Element) => { // Beginning works on the event-listener        
+        (cell as HTMLDivElement).addEventListener('mousedown', hadlerMmouseEvent);
+
+        function hadlerMmouseEvent(e: MouseEvent) {
+          /**
+     * This's headler for a 'mousedown' MouseEvent
+     */
           e.preventDefault();
-          console.log('cell: ', cell);
           mouseEvents(cell, e);
-          cell.removeEventListener('mousedown', this.getDnd);
+          document.documentElement.removeEventListener('mousedown', hadlerMmouseEvent);
 
-        });
+        } 
 
       });
 
@@ -49,8 +53,9 @@ export class ReLocates {
   }
 
   startWork() {
-
-    this.getCells = document.getElementsByClassName('cell') as HTMLCollectionOf<HTMLDivElement>;
+    const cells = document.getElementsByClassName('cell') as HTMLCollectionOf<HTMLDivElement>;
+    this.getCells = cells;
     this.getDnd();
+
   }
 }
