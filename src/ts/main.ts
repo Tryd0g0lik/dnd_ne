@@ -1,8 +1,8 @@
 const { cellAdding } = require('./functions.ts');
-const { ReLocates } = require('./relocates.ts');
 
 
-export class Main {
+
+export class Mains {
 
   elem: HTMLDivElement
 
@@ -60,21 +60,7 @@ export class Main {
       this.getToTasksRemover();
     });
 
-
-
   }
 }
 
-function work() {
-  const article = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLDivElement>;
-  let elem: HTMLDivElement;
 
-  for (elem of article) {
-    new Main(elem);
-
-
-  }
-  new ReLocates();
-}
-// mouseEvents();
-work();
