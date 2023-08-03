@@ -61,8 +61,32 @@ const onMouseOver = (e: MouseEvent) => {
   /**
    *there is the active box locationing dinding inder course(mouse)
    */
+
+  heightForNewLocation(actualCells)
+    .then((result) => {
+      Array.from(result).forEach((cell) => {
+        cell.addEventListener('mouseleave', handlerMouseLeave);
+        document.documentElement.addEventListener('mouseup', handlerMouseUP);
+
+        function handlerMouseUP(e: MouseEvent) {
+          Array.from(result).forEach((cell) => { if (cell.hasAttribute('style')) cell.removeAttribute('style'); });
+          document.body.removeEventListener('mouseup', handlerMouseUP);
+          e.stopPropagation();
+        }
+
+        function handlerMouseLeave(e: MouseEvent) {
+          if (cell.hasAttribute('style')) cell.removeAttribute('style');
+          document.documentElement.removeEventListener('mouseleave', handlerMouseLeave);
+          e.stopPropagation();
+        }
+      });
+      return result
+    });
+
   actualCells.style.top = e.clientY - (clientY - boxTop) + 'px'; // 28 это кнопка "удалить ячейку"
   actualCells.style.left = e.clientX - (clientX - boxLeft) + 'px';
+
+
 
 }
 
@@ -81,8 +105,16 @@ const onMouseUp = (e: MouseEvent) => {
   actualCells.removeAttribute('style');
   actualCells = undefined as any;
 
+  Array.from(document.getElementsByClassName('task')).forEach((elem) => {
+    if (elem.hasAttribute('style')) elem.removeAttribute('style');
+  });
   document.documentElement.removeEventListener('mouseup', onMouseUp);
   document.documentElement.removeEventListener('mouseover', onMouseOver);
+  // document.documentElement.removeEventListener('mouseenter', () => heightForNewLocation);
+  // document.documentElement.removeEventListener('mouseleave', () => heightForNewLocation);
+
+
+
 
   (boxLeft as any) = undefined;
   (boxTop as any) = undefined;
@@ -90,6 +122,42 @@ const onMouseUp = (e: MouseEvent) => {
   (clientY as any) = undefined;
   // The finished to the DnD actions
 }
+
+const heightForNewLocation = async (elem: HTMLElement) => {
+
+  let cells = await document.documentElement.getElementsByClassName('task') as HTMLCollectionOf<HTMLElement>;
+  /**
+   * this 'elem'  it's a new html-element which has the class 'draggend' at the now time.
+   */
+  const result = await Array.from(cells).filter((cell) => {
+    if (cell.classList.contains('draggend') === false) return cell;
+  });
+
+  // for (let i = 0; i < cells.length; i++) {
+
+  Array.from(result).forEach((cell) => {
+    cell.addEventListener('mouseenter', heandlerMouseenter as any);
+
+    function heandlerMouseenter(e: MouseEvent) {
+      let box = cell.getBoundingClientRect();
+      // let r = e.target as HTMLElement;
+
+      if (e.clientY >= box.top && e.clientY <= box.bottom
+        && e.clientX >= box.left && e.clientX <= box.right) {
+        const r = e.target as HTMLElement;
+        r.style.marginTop = String(elem.offsetHeight) + 'px';
+
+      };
+      // document.documentElement.removeEventListener('mouseenter', heightForNewLocation as any);
+      document.documentElement.removeEventListener('mouseenter', heandlerMouseenter as any);
+      e.stopPropagation();
+
+      console.log('dsdsssssssssssssssssss');
+    }
+  });
+
+  return result
+};
 
 
 export function mouseEvents(elem: HTMLElement, e: MouseEvent) {
@@ -109,6 +177,9 @@ export function mouseEvents(elem: HTMLElement, e: MouseEvent) {
   actualCells = elem;
 
 
+
   document.documentElement.addEventListener('mouseup', onMouseUp);
   document.documentElement.addEventListener('mouseover', onMouseOver);
+
+
 }
