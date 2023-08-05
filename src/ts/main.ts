@@ -3,9 +3,7 @@ const { cellAdding } = require('./functions.ts');
 
 
 export class Mains {
-
   elem: HTMLDivElement
-
   constructor(selector: HTMLDivElement) {
     /**
      * Выбираем колонку

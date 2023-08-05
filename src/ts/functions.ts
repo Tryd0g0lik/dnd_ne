@@ -48,6 +48,7 @@ export function cellAdding(elem: HTMLElement) {
 }
 
 
+/** HANDLEs for events  start*/
 let actualColumn: HTMLElement;
 let actualCells: HTMLElement;
 
@@ -159,3 +160,5 @@ export function hadlerMmouseEvent(e: MouseEvent) {
   }
   document.documentElement.removeEventListener('mousedown', hadlerMmouseEvent);
 } 
+/** HANDLEs for events - end*/
+
