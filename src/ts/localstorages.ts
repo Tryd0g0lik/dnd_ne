@@ -54,15 +54,12 @@ export class GetSaveToLocalStorage {
     });
   }
 
-
   loaderStorage() {
     /**
      * Loads data from the localStorage and saves they to the www-page
      */
     let cells: HTMLCollectionOf<HTMLElement>;
-
     window.addEventListener('DOMContentLoaded', async () => {
-
       await Array.from(this.#getcolumns).forEach((column: HTMLElement) => {
         /**
          * THere is will be load the column's data.
@@ -76,16 +73,13 @@ export class GetSaveToLocalStorage {
 
         for (let i = 0; i < this.#cell.length; i++) cells[i].innerHTML = this.#cell[i] as string;
       });
-
     });
-
   }
 
   async startWork() {
     this.getCells = await this.#getcolumns;
     this.saveLStorage(this.getCells);
     this.loaderStorage()
-
 
   }
 }
