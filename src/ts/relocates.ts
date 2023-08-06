@@ -17,7 +17,6 @@ export class ReLocates {
 
   set getCells(elems: HTMLCollectionOf<HTMLDivElement>) {
     // вешаем прослушку на кнопку ДОБАВИТЬ
-
     Array.from(elems).forEach((elem: HTMLDivElement) => {
       elem.addEventListener('click', (e: MouseEvent) => {
         this.startWork();
