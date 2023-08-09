@@ -8,6 +8,7 @@ const article = document.getElementsByTagName('article') as HTMLCollectionOf<HTM
 let elem: HTMLDivElement;
 
 for (elem of article) new Mains(elem);
-new ReLocates();
+
+new ReLocates(document.getElementsByTagName('article'));
 new GetSaveToLocalStorage();
 

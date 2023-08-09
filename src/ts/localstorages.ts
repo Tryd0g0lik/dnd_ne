@@ -49,8 +49,8 @@ export class GetSaveToLocalStorage {
      * Every one column of www-page is the one's line for the localStorage.
      */
     (elems).forEach((elem: ColumnCells) => {
-      const v = Object.values(elem);
-      localStorage.setItem(v[0].trim() as string, JSON.stringify({ tasks: elem.tasks }));
+      const object = Object.values(elem);
+      localStorage.setItem(object[0].trim() as string, JSON.stringify({ tasks: elem.tasks }));
     });
   }
 
