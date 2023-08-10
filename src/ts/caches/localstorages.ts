@@ -16,14 +16,16 @@ export class GetSaveToLocalStorage {
     this.startWork();
   }
 
+
+
+  /**
+   * :params elems: it's loading 'this.#getcolumns:HTMLCollectionOf<HTMLElement>' from the constructor;
+   * Then loading the 'this.#cell:Array<[]>' data/ It's a cell's contents.
+   * On processing data at the finising will been get a 'this.#response: Array<ColumnCells>' 
+   * 
+   *  Every one column of www-page is the one's line for the localStorage.
+   */
   set getCells(elems: HTMLCollectionOf<HTMLElement>) {
-    /**
-     * :params elems: it's loading 'this.#getcolumns:HTMLCollectionOf<HTMLElement>' from the constructor;
-     * Then loading the 'this.#cell:Array<[]>' data/ It's a cell's contents.
-     * On processing data at the finising will been get a 'this.#response: Array<ColumnCells>' 
-     * 
-     *  Every one column of www-page is the one's line for the localStorage.
-     */
 
     Array.from(elems).forEach((elem: HTMLElement) => {
       const columnName = elem.getElementsByClassName('header')[0].innerHTML as string;
@@ -54,10 +56,11 @@ export class GetSaveToLocalStorage {
     });
   }
 
+
+  /**
+   * Loads data from the localStorage and saves they to the www-page
+   */
   loaderStorage() {
-    /**
-     * Loads data from the localStorage and saves they to the www-page
-     */
     let cells: HTMLCollectionOf<HTMLElement>;
     window.addEventListener('DOMContentLoaded', async () => {
       await Array.from(this.#getcolumns).forEach((column: HTMLElement) => {

@@ -1,6 +1,6 @@
-const { ReLocates } = require('./relocates.ts');
-const { Mains } = require('./main.ts');
-const { GetSaveToLocalStorage } = require('./localstorages.ts');
+const { ReLocates } = require('./locations/relocates.ts');
+const { Mains } = require('./mains/main.ts');
+const { GetSaveToLocalStorage } = require('../cahes/localstorages.ts');
 
 
 
