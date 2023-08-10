@@ -1,3 +1,4 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/6b6sg3v173wayoay/branch/master?svg=true)](https://ci.appveyor.com/project/Tryd0g0lik/dnd-ne/branch/master)
 # Домашнее задание к занятию "6. Работа с файлами, DnD"
 
 Правила сдачи задания:
