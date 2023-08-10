@@ -3,3 +3,4 @@ dist
 files/
 pic/
 *.config.js
+src/index.js

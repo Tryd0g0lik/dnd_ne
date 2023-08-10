@@ -29,8 +29,8 @@ module.exports = {
       filename: '[name].css',
     }),
     new webpack.SourceMapDevToolPlugin({
-      filename: '[file].map[query]',
-      exclude: "./src/index.js"
+      filename: '[file].map.[query]',
+      exclude: path.join(__dirname, './src'),
     }),
     // Add your plugins here
     // Learn more about plugins from https://webpack.js.org/configuration/plugins/
@@ -46,11 +46,17 @@ module.exports = {
       },
       {
         test: /\.js$/i,
-        include: [
-          path.resolve(__dirname, './src'),
-        ],
+        exclude: /node_modules/,
         use: [{
           loader: 'babel-loader',
+          options: {
+            presets: [
+              ['@babel/preset-env', { targets: "defaults" }]
+            ],
+            plugins: [
+              '@babel/plugin-proposal-class-properties',
+            ],
+          }
         },],
       },
 
