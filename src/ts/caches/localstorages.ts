@@ -6,7 +6,7 @@ interface ColumnCells {
 
 export class GetSaveToLocalStorage {
   #getcolumns: HTMLCollectionOf<HTMLElement>
-  #cell: Array<string> | Array<Object>;
+  #cell: any;
   #response: Array<ColumnCells>
 
   constructor() {
@@ -25,7 +25,7 @@ export class GetSaveToLocalStorage {
    * 
    *  Every one column of www-page is the one's line for the localStorage.
    */
-  set getCells(elems: HTMLCollectionOf<HTMLElement>) {
+  set settingCells(elems: HTMLCollectionOf<HTMLElement>) {
 
     Array.from(elems).forEach((elem: HTMLElement) => {
       const columnName = elem.getElementsByClassName('header')[0].innerHTML as string;
@@ -42,7 +42,7 @@ export class GetSaveToLocalStorage {
     });
   }
 
-  get getCells(): Array<ColumnCells> { return this.#response as Array<ColumnCells>; }
+  get settingCells(): Array<ColumnCells> { return this.#response as Array<ColumnCells>; }
 
   saveLStorage(elems: Array<ColumnCells>) {
     /***
@@ -80,8 +80,8 @@ export class GetSaveToLocalStorage {
   }
 
   async startWork() {
-    this.getCells = await this.#getcolumns;
-    this.saveLStorage(this.getCells);
+    this.settingCells = await this.#getcolumns;
+    this.saveLStorage(this.settingCells);
     this.loaderStorage()
 
   }

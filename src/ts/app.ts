@@ -1,6 +1,7 @@
 const { ReLocates } = require('./locations/relocates.ts');
 const { Mains } = require('./mains/main.ts');
-const { GetSaveToLocalStorage } = require('../cahes/localstorages.ts');
+const { GetSaveToLocalStorage } = require('./caches/localstorages.ts');
+
 
 
 
