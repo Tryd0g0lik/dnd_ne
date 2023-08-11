@@ -8,8 +8,8 @@ const { GetSaveToLocalStorage } = require('./caches/localstorages.ts');
 const article = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLDivElement>;
 let elem: HTMLDivElement;
 
+new GetSaveToLocalStorage();
 for (elem of article) new Mains(elem);
 
 new ReLocates(document.getElementsByTagName('article'));
-new GetSaveToLocalStorage();
 

@@ -14,7 +14,7 @@ module.exports = merge(common, {
       directory: path.join(__dirname, 'dist'),
     },
     compess: true,
-    historyApiFallback: true,
+    historyApiFallback: true, //<base href="/" />
     // open: true,
     port: 8080,
   },
