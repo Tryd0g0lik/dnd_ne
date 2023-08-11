@@ -4,3 +4,4 @@ src/index.ts
 webpack*
 node_modules
 *.config.js
+.github
