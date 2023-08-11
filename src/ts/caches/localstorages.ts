@@ -49,7 +49,6 @@ export class GetSaveToLocalStorage {
    * :params `elems`: At entrance the Aray<Object>. It's got from the 'get getCells'
    */
   saveLStorage(elems: Array<ColumnCells>) {
-    console.log('object: ', elems);
     localStorage.setItem('columns', JSON.stringify({ tasks: elems }));
   }
 
@@ -59,6 +58,7 @@ export class GetSaveToLocalStorage {
   loaderStorage() {
     window.addEventListener('DOMContentLoaded', () => {
       this.#cell = JSON.parse(localStorage.getItem('columns') as string);
+      // debugger;
       Array.from(this.#cell.tasks).forEach((desc: any) => {
 
         let pageColumnName;
@@ -77,8 +77,8 @@ export class GetSaveToLocalStorage {
   }
 
   startWork() {
-    this.loaderStorage()
-    this.settingCells = this.#getcolumns;
-    this.saveLStorage(this.settingCells);
+    this.loaderStorage();
+    // this.settingCells = this.#getcolumns;
+    // this.saveLStorage(this.settingCells);
   }
 }
