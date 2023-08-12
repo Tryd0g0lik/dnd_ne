@@ -1,85 +1,69 @@
-interface ColumnCells {
-  column: string;
-  tasks: Array<string>;
+
+class Task {
+  elem: HTMLElement;
+  /**
+   * TODO: This will be making changes to the text from a cells
+   * :params elemenrt: This's date the HTMLElement type. Here store the task's text.
+   */
+  constructor(element: HTMLElement) { this.elem = element; }
+
+  get reciveTask(): string { return (this.elem.textContent as string).slice(); }
+
+  set changeTask(text: string) { if (text.length > 0) this.elem.innerHTML = text }
 }
 
 
-export class GetSaveToLocalStorage {
-  #getcolumns: any;  //HTMLCollectionOf<HTMLElement>
-  #cell: any;
-  #response: Array<ColumnCells>
+export class LStorage extends Task {
+  existence: (string | null);
+  len: number;
 
-  constructor() {
-    this.#getcolumns = document.getElementsByTagName('article') as HTMLCollectionOf<HTMLElement>;
-    this.#cell = [];
-    this.#response = [];
+  /**
+   *TODO: For a vache work on the page.
+   * 'chackKey()' - checking key from the localStorage.
+   * 'getItemsLS()'- geting datas from the localStorage. It's return the 'Object{}' format/
+   * 'setItemsLS()' - for conservation datas to the localStorage.
+   * 'receiveOfLS()' - receiver or cache datas from the localStorage and the page update.
+   * 'saveToLS()' - this's datas conservation to the localStorage
+   * @param element: this's HTMLElement's type box for keep a text from the cell.
+   * @param len: this's length or the 'element' count .
+   */
+  constructor(element: HTMLElement, len: number) {
+    super(element)
+    this.existence = null;
+    this.len = len;
     this.startWork();
   }
 
+  private chackKey(str: string) { this.existence = localStorage.getItem(str); }
+  private getItemLS() { return JSON.parse(localStorage.getItem('columns') as any) }
+  private setItemLS(elem: {}) { localStorage.setItem('columns', JSON.stringify(elem)); }
 
+  receiveOfLS(i: number) {
+    this.chackKey('columns')
+    if (this.existence !== null) {
+      const storage = this.getItemLS();
+      super.changeTask = storage.tasks[i];
+    }
+  }
 
-  /**
-   * :params elems: it's loading 'this.#getcolumns:HTMLCollectionOf<HTMLElement>' from the constructor;
-   * Then loading the 'this.#cell:Array<[]>' data/ It's a cell's contents.
-   * On processing data at the finising will been get a 'this.#response: Array<ColumnCells>' 
-   * 
-   *  Every one column of www-page is the one's line for the localStorage.
-   */
-  set settingCells(elems: HTMLCollectionOf<HTMLElement>) {
-    Array.from(elems).forEach((elem: HTMLElement) => {
-      const columnName = elem.getElementsByClassName('header')[0].innerHTML as string;
-      const cells = elem.getElementsByClassName('task') as HTMLCollectionOf<HTMLElement>;
+  private saveToLS() {
+    const task = super.reciveTask;
+    this.chackKey('columns');
 
-      for (let i = 0; i < cells.length; i++) {
-        const cellContent = cells[i].getElementsByClassName('descrip')[0].textContent;
-        if (cellContent !== null) (this.#cell as Array<string>).push(cellContent);
+    if (this.existence === null) {
+      this.setItemLS({ tasks: [task] });
+      return
+    }
+
+    if (this.len !== this.getItemLS().tasks.length) {
+      let respons = this.getItemLS();
+      const { tasks } = (respons);
+      if (String(tasks).indexOf(this.reciveTask) === -1) {
+        respons.tasks.push(task);
+        this.setItemLS(respons);
       }
-      this.#response.push({ "column": columnName, "tasks": this.#cell as Array<string> });
-
-      this.#cell = [];
-
-    });
+    }
   }
 
-  get settingCells(): Array<ColumnCells> { return this.#response as Array<ColumnCells>; }
-
-
-  /***
-   * Saving all data (task text from the cell).
-   * :params `elems`: At entrance the Aray<Object>. It's got from the 'get getCells'
-   */
-  saveLStorage(elems: Array<ColumnCells>) {
-    localStorage.setItem('columns', JSON.stringify({ tasks: elems }));
-  }
-
-  /**
-   * Loads datas from the localStorage.
-   */
-  loaderStorage() {
-
-    this.#cell = JSON.parse(localStorage.getItem('columns') as string);
-    if (this.#cell) Array.from(this.#cell.tasks).forEach((desc: any) => {
-
-        let pageColumnName;
-        for (let i = 0; i < this.#getcolumns.length; i++) {
-          pageColumnName = this.#getcolumns[i].getElementsByClassName('header')[0];
-          if (pageColumnName.innerHTML.trim().indexOf(desc.column.trim()) >= 0) break
-        }
-
-        pageColumnName = (pageColumnName as HTMLDivElement).parentElement;
-        const cellsOfColumns = pageColumnName?.getElementsByClassName('task') as HTMLCollectionOf<HTMLElement>
-
-        for (let i = 0; i < cellsOfColumns.length; i++) cellsOfColumns[i].getElementsByClassName('descrip')[0].innerHTML = desc.tasks[i];
-        pageColumnName = undefined;
-      });
-
-  }
-
-  startWork() {
-    window.addEventListener('DOMContentLoaded', () => {
-      this.settingCells = this.#getcolumns;
-      this.loaderStorage();
-      this.saveLStorage(this.settingCells);
-    });
-  }
+  startWork() { this.saveToLS(); }
 }
