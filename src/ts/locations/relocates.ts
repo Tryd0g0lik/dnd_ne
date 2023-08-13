@@ -1,42 +1,53 @@
-const { hadlerMmouseEvent } = require('./functions.ts');
-
-
 export class ReLocates {
-  /**
-   * It's class for a Dnd actions
-   */
+  elem: HTMLElement;
+  clientX: any;
+  clientY: any;
+  boxTop: any;
+  boxLeft: any;
 
-  columns: HTMLCollectionOf<HTMLDivElement> | undefined;
-  constructor(columns = undefined) {
-    /**
-     * To chooses a column for a event
-     */
-    this.columns = columns;
-    this.startWork();
+  constructor(elem: HTMLElement) {
+    this.elem = elem;
+    this.clientX = undefined;
+    this.clientY = undefined;
+    this.boxTop = undefined;
+    this.boxLeft = undefined;
   }
 
-  set getCells(elems: HTMLCollectionOf<HTMLDivElement>) {
-    // вешаем прослушку на кнопку ДОБАВИТЬ
-    Array.from(elems).forEach((elem: HTMLDivElement) => {
-      elem.addEventListener('click', (e: MouseEvent) => {
-        this.startWork();
-        document.documentElement.removeEventListener('click', this.getCells as any);
-      });
-    });
-  }
-
-  getDnd() { // setDnd rename in the getDnd and choose a type from the GET to the METHOD/    
-    if (this.columns != undefined) {
-      Array.from(this.columns).forEach(async (collum: HTMLElement) => { // Get column from the page    
-      document.body.addEventListener('mousedown', hadlerMmouseEvent, true);
-    });
+  manageCss(e: MouseEvent) {
+    if (e.type === 'mousedown') {
+      this.startLocation = e;
+      this.elem.classList.add('draggend')
+    };
+    if (e.type === 'mouseover') this.startReLocation(e);
+    if (e.type === 'mouseup') {
+      this.elem.classList.remove('draggend');
+      this.elem.removeAttribute('style');
     }
   }
 
-  startWork() {
-    const cells = document.getElementsByClassName('cell') as HTMLCollectionOf<HTMLDivElement>;
-    this.getCells = cells;
-    this.getDnd();
+  private receiveBoxCoordinately() { return this.elem.getBoundingClientRect(); }
 
+  private onMouseOver(e: MouseEvent) {
+    console.log(e);
+    this.elem.style.top = e.clientY - (this.clientY - this.boxTop) + 'px';
+    this.elem.style.left = e.clientX - (this.clientX - this.boxLeft) + 'px';
   }
+
+  set startLocation(e: MouseEvent) {
+    /**
+     * Coordibates basis to the Box/container which has a 'task' class on started
+     */
+    const box = this.receiveBoxCoordinately();
+    this.boxLeft = box.left;
+    this.boxTop = box.top;
+
+
+    /**
+     * Coordinates to the cursor to the click's point
+     */
+    this.clientX = e.clientX;
+    this.clientY = e.clientY;
+  }
+
+  startReLocation(e: MouseEvent) { this.onMouseOver(e); }
 }
