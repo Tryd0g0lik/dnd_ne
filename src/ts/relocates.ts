@@ -28,7 +28,6 @@ export class ReLocates {
   private receiveBoxCoordinately() { return this.elem.getBoundingClientRect(); }
 
   private onMouseOver(e: MouseEvent) {
-    console.log(e);
     this.elem.style.top = e.clientY - (this.clientY - this.boxTop) + 'px';
     this.elem.style.left = e.clientX - (this.clientX - this.boxLeft) + 'px';
   }
@@ -40,7 +39,6 @@ export class ReLocates {
     const box = this.receiveBoxCoordinately();
     this.boxLeft = box.left;
     this.boxTop = box.top;
-
 
     /**
      * Coordinates to the cursor to the click's point

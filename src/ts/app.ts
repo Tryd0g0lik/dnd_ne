@@ -1,6 +1,6 @@
-const { ReLocates } = require('./locations/relocates.ts');
-const { Mains } = require('./mains/main.ts');
-const { LStorage } = require('./caches/localstorages.ts');
+const { ReLocates } = require('./relocates.ts');
+const { LStorage } = require('./localstorages.ts');
+const { cellAdding } = require('./functions.ts');
 
 let cell: any = undefined;
 const cells = document.getElementsByClassName('task') as HTMLCollectionOf<HTMLDivElement>;
@@ -16,25 +16,25 @@ const listenerEventDown = function (e: MouseEvent) {
     cell = new ReLocates(elem);
     cell.manageCss(e);
 
-    document.documentElement.addEventListener('mouseup', listenerMouseUp);
-    document.documentElement.addEventListener('mouseover', listenerMouseOver, true);
+    document.documentElement.addEventListener('mouseup', listenerEventUp);
+    document.documentElement.addEventListener('mouseover', listenerEventOver, true);
   }
 
 }
 
-const listenerMouseOver = function (e: MouseEvent) {
+const listenerEventOver = function (e: MouseEvent) {
   e.preventDefault();
   cell.manageCss(e);
 }
 
-const listenerMouseUp = function (e: MouseEvent) {
+const listenerEventUp = function (e: MouseEvent) {
   const eventTarget = e.target as HTMLElement;
   const actualColumn = eventTarget.parentElement as HTMLElement;
   if (eventTarget.classList.contains('task')) actualColumn.insertBefore(cell.elem, eventTarget);
 
   cell.manageCss(e);
-  document.documentElement.removeEventListener('mouseover', listenerMouseOver, true);
-  document.documentElement.removeEventListener('mouseup', listenerMouseUp);
+  document.documentElement.removeEventListener('mouseover', listenerEventOver, true);
+  document.documentElement.removeEventListener('mouseup', listenerEventUp);
   cell = undefined;
 }
 
@@ -51,3 +51,20 @@ if (tasks !== undefined) {
   }
 }
 
+/** Adding cells - start */
+
+document.body.addEventListener('mousedown', (e: MouseEvent) => {
+  e.preventDefault();
+  if ((e.target as HTMLElement).classList.contains('footer-addCell')) {
+    const column = (e.target as HTMLElement).parentElement?.parentElement?.parentElement;
+    cellAdding(column);
+  }
+});
+/** Adding cells - end */
+
+/** Remover cells - start */
+document.body.addEventListener('click', (e: MouseEvent) => {
+  const targetEvent = e.target as HTMLElement;
+  if (targetEvent.classList.contains('delete-task')) targetEvent.parentElement?.remove();
+});
+/** Remover cells - end */
