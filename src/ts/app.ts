@@ -15,7 +15,7 @@ const listenerEventDown = function (e: MouseEvent) {
 
     cell = new ReLocates(elem);
     cell.manageCss(e);
-
+    debugger;
     document.documentElement.addEventListener('mouseup', listenerEventUp);
     document.documentElement.addEventListener('mouseover', listenerEventOver, true);
   }
