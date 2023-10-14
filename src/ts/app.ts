@@ -11,11 +11,12 @@ const listenerEventDown = function (e: MouseEvent) {
 
   if ((e.target as HTMLElement).classList.contains('task')) {
     e.preventDefault()
+    // debugger;
+
     const elem = e.target;
 
     cell = new ReLocates(elem);
     cell.manageCss(e);
-    debugger;
     document.documentElement.addEventListener('mouseup', listenerEventUp);
     document.documentElement.addEventListener('mouseover', listenerEventOver, true);
   }
@@ -24,10 +25,12 @@ const listenerEventDown = function (e: MouseEvent) {
 
 const listenerEventOver = function (e: MouseEvent) {
   e.preventDefault();
+  // debugger;
   cell.manageCss(e);
 }
 
 const listenerEventUp = function (e: MouseEvent) {
+  debugger
   const eventTarget = e.target as HTMLElement;
   const actualColumn = eventTarget.parentElement as HTMLElement;
   if (eventTarget.classList.contains('task')) actualColumn.insertBefore(cell.elem, eventTarget);
