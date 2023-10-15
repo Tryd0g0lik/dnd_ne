@@ -1,4 +1,4 @@
-const { ParentHtmlBox } = require('./relocates.ts');
+const { ReLocates } = require('./relocates.ts');
 const { LStorage } = require('./localstorages.ts');
 const { cellAdding } = require('./functions.ts');
 
@@ -11,15 +11,14 @@ const listenerEventDown = function (e: MouseEvent) {
 
   if ((e.target as HTMLElement).classList.contains('task')) {
     e.preventDefault()
-    // debugger;
 
     const elem = e.target;
 
-    cell = new ParentHtmlBox(elem);
+    cell = new ReLocates(elem);
     cell.manageCss(e);
 
     document.documentElement.addEventListener('mouseup', listenerEventUp);
-    document.documentElement.addEventListener('mouseover', listenerEventOver, true);
+    document.documentElement.addEventListener('mousemove', listenerEventOver, true);
   }
 }
 
@@ -27,13 +26,6 @@ const listenerEventOver = function (e: MouseEvent) {
   e.preventDefault();
   // debugger;
   cell.manageCss(e);
-  const elem = e.target as HTMLElement;
-  if (elem.classList
-    && (elem.classList.contains('column')
-      || elem.classList.contains('main'))) {
-    cell.searchParentBoxs = e.target;
-    cell.getLocationParentBoxs;
-  };
 };
 const listenerEventUp = function (e: MouseEvent) {
   debugger
@@ -42,7 +34,7 @@ const listenerEventUp = function (e: MouseEvent) {
   if (eventTarget.classList.contains('task')) actualColumn.insertBefore(cell.elem, eventTarget);
 
   cell.manageCss(e);
-  document.documentElement.removeEventListener('mouseover', listenerEventOver, true);
+  document.documentElement.removeEventListener('mousemove', listenerEventOver, true);
   document.documentElement.removeEventListener('mouseup', listenerEventUp);
   cell = undefined;
 }

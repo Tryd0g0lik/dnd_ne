@@ -1,4 +1,4 @@
-class ReLocates {
+export class ReLocates {
   elem: HTMLElement;
   clientX: any;
   clientY: any;
@@ -18,7 +18,7 @@ class ReLocates {
       this.startLocation = e;
       this.elem.classList.add('draggend')
     };
-    if (e.type === 'mouseover') this.startReLocation(e);
+    if (e.type === 'mousemove') this.onMouseOver(e);
     if (e.type === 'mouseup') {
       this.elem.classList.remove('draggend');
       this.elem.removeAttribute('style');
@@ -47,43 +47,5 @@ class ReLocates {
     this.clientY = e.clientY;
   }
 
-  startReLocation(e: MouseEvent) { this.onMouseOver(e); }
 }
 
-export class ParentHtmlBox extends ReLocates {
-  private parentBox: HTMLElement | undefined = undefined;
-  // cursorOverBox: HTMLElement;
-  // parentBox: HTMLElement;
-  constructor(
-    elemClick: HTMLElement
-  ) {
-    super(elemClick)
-    // this.parentBox = undefined;
-
-  };
-
-  /**
-   * 
-   * @param e Событие, когда курсор над родительским блоком елемента < article > или < main >
-   */
-  set searchParentBoxs(elem: HTMLElement) { this.parentBox = elem };
-  get foundParentBoxs(): HTMLElement { return this.parentBox as HTMLElement };
-
-  /**
-   *Определяем координаты родительского елемента.
-   *  */
-  get getLocationParentBoxs() {
-    const locationParentBox = this.foundParentBoxs as HTMLElement;
-    console.log('[locationParentBox Type]: ', typeof locationParentBox, locationParentBox)
-    const boxLocation = locationParentBox.getBoundingClientRect();
-
-    console.log('[parentBox]: ', locationParentBox,
-      '[parentBox.class]: ', locationParentBox.id || locationParentBox.classList,
-      '[parantBox.LOcations]:', boxLocation
-    )
-    return locationParentBox
-  }
-
-
-
-}
