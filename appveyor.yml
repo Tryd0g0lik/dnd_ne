@@ -12,8 +12,8 @@ platform:
   # - x86
   # - amd64
 
-init:
-  - git config --global core.autocrlf input
+# init:
+#   - git config --global core.autocrlf input
 
 stack: node 18.12.0
 
@@ -21,21 +21,20 @@ cache:
   - node_modules
 
 install:
- - npm install 
+ - yarn 
 
 build: off
 
 
 deploy: off
-
-
-artifacts:
-  - path: '\dist/to/file.exe\'
+    
+# artifacts:
+#   - path: '\dist/to/file.exe\'
 
 
 after_build:
-  - npm run build
-  - npm run lint
+  - yarn run build
+  - yarn run lint
   - ps: Get-ChildItem .\*.nupkg | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 
 deploy_script:
@@ -47,5 +46,5 @@ deploy_script:
   - git config --global user.email work80@mail.ru
   - ps: Write-Host "https://$GITHUB_TOKEN:x-oauth-basic@github.com" > "$HOME/.git-credentials" -NoNewline
 
-  - npm install push-dir --dir=dist --branch=master --force
+  - yarn add push-dir --dir=dist --branch=master --force
 
