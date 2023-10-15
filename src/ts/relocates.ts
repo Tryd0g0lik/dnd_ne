@@ -18,7 +18,7 @@ export class ReLocates {
       this.startLocation = e;
       this.elem.classList.add('draggend')
     };
-    if (e.type === 'mousemove') this.onMouseOver(e);
+    if (e.type === 'mousemove') this.startReLocation(e);
     if (e.type === 'mouseup') {
       this.elem.classList.remove('draggend');
       this.elem.removeAttribute('style');
@@ -45,7 +45,8 @@ export class ReLocates {
      */
     this.clientX = e.clientX;
     this.clientY = e.clientY;
+    this.onMouseOver(e)
   }
 
+  startReLocation(e: MouseEvent) { this.onMouseOver(e); }
 }
-
