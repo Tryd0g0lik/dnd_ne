@@ -11,29 +11,30 @@ const listenerEventDown = function (e: MouseEvent) {
 
   if ((e.target as HTMLElement).classList.contains('task')) {
     e.preventDefault()
+
     const elem = e.target;
 
     cell = new ReLocates(elem);
     cell.manageCss(e);
 
     document.documentElement.addEventListener('mouseup', listenerEventUp);
-    document.documentElement.addEventListener('mouseover', listenerEventOver, true);
+    document.documentElement.addEventListener('mousemove', listenerEventOver, true);
   }
-
 }
 
 const listenerEventOver = function (e: MouseEvent) {
   e.preventDefault();
+  // debugger;
   cell.manageCss(e);
-}
-
+};
 const listenerEventUp = function (e: MouseEvent) {
+  debugger
   const eventTarget = e.target as HTMLElement;
   const actualColumn = eventTarget.parentElement as HTMLElement;
   if (eventTarget.classList.contains('task')) actualColumn.insertBefore(cell.elem, eventTarget);
 
   cell.manageCss(e);
-  document.documentElement.removeEventListener('mouseover', listenerEventOver, true);
+  document.documentElement.removeEventListener('mousemove', listenerEventOver, true);
   document.documentElement.removeEventListener('mouseup', listenerEventUp);
   cell = undefined;
 }
