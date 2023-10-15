@@ -1,7 +1,7 @@
 
 function cellCreate(): HTMLDivElement {
   /**
-   * Created a new html code to the cell
+   * Create a new html code to the cell
    */
   const divTask = document.createElement('div');
   divTask.classList.add('task');
@@ -40,7 +40,7 @@ function cellCreate(): HTMLDivElement {
 
 export function cellAdding(elem: HTMLElement) {
   /**
-   * Cell is add
+   * Cell is add new html-box
    * 
    */
   const htmlDivElement = cellCreate();

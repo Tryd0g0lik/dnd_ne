@@ -2,7 +2,7 @@
 class Task {
   elem: HTMLElement;
   /**
-   * TODO: This will be making changes to the text from a cells
+   * TODO: This will be making changes to the text from cells
    * :params elemenrt: This's date the HTMLElement type. Here store the task's text.
    */
   constructor(element: HTMLElement) { this.elem = element; }

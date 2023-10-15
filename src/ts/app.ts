@@ -1,4 +1,4 @@
-const { ReLocates } = require('./relocates.ts');
+const { ParentHtmlBox } = require('./relocates.ts');
 const { LStorage } = require('./localstorages.ts');
 const { cellAdding } = require('./functions.ts');
 
@@ -15,20 +15,26 @@ const listenerEventDown = function (e: MouseEvent) {
 
     const elem = e.target;
 
-    cell = new ReLocates(elem);
+    cell = new ParentHtmlBox(elem);
     cell.manageCss(e);
+
     document.documentElement.addEventListener('mouseup', listenerEventUp);
     document.documentElement.addEventListener('mouseover', listenerEventOver, true);
   }
-
 }
 
 const listenerEventOver = function (e: MouseEvent) {
   e.preventDefault();
   // debugger;
   cell.manageCss(e);
-}
-
+  const elem = e.target as HTMLElement;
+  if (elem.classList
+    && (elem.classList.contains('column')
+      || elem.classList.contains('main'))) {
+    cell.searchParentBoxs = e.target;
+    cell.getLocationParentBoxs;
+  };
+};
 const listenerEventUp = function (e: MouseEvent) {
   debugger
   const eventTarget = e.target as HTMLElement;
