@@ -1,5 +1,5 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/wbc09tmmkaiuy3tp/branch/master?svg=true)](https://ci.appveyor.com/project/Tryd0g0lik/dnd-ne/branch/master)
-# Занятию  DnD
+# Задача
 
 Правила сдачи задания:
 
