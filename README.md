@@ -1,4 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/wbc09tmmkaiuy3tp/branch/master?svg=true)](https://ci.appveyor.com/project/Tryd0g0lik/dnd-ne/branch/master)
+
+Backend подключение примерно 50 сек.
 # Задача
 
 1. **Важно**:  использовать yarn 
